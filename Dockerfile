@@ -1,12 +1,12 @@
-FROM docker:1.13.1
+FROM docker:stable
 
 MAINTAINER Basilio Vera <basilio.vera@softonic.com>
 
-ARG "version=0.1.0-dev"
-ARG "build_date=unknown"
-ARG "commit_hash=unknown"
-ARG "vcs_url=unknown"
-ARG "vcs_branch=unknown"
+ARG version="0.1.0-dev"
+ARG build_date="unknown"
+ARG commit_hash="unknown"
+ARG vcs_url="unknown"
+ARG vcs_branch="unknown"
 
 LABEL org.label-schema.vendor="softonic" \
     org.label-schema.name="docker-system-prune" \
@@ -22,4 +22,5 @@ LABEL org.label-schema.vendor="softonic" \
 
 COPY run.sh /run.sh
 
-CMD ["/run.sh"]
+ENTRYPOINT ["/run.sh"]
+CMD ["--all"]

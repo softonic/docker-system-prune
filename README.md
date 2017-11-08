@@ -10,7 +10,7 @@ The main advantage over external solutions like a cron job is that you can launc
 
 For example in a Swarm mode cluster:
 
-```bash
+``` bash
 docker \
   service create --name docker-system-prune \
     --mount type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
@@ -20,7 +20,21 @@ docker \
     softonic/docker-system-prune 
 ```
 
-This would launch the "prune" command in all the nodes in the cluster once a day, more or less, during 10 years.
+This launches the "prune" command in all the nodes in the cluster once a day, more or less, during 10 years.
+
+By default it launches the service with the parameters `--force` and `--all`, but you can change these if you like just
+adding then when defining the service. For example:
+
+``` bash
+ docker \
+   service create --name docker-system-prune \
+     --mount type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
+     --mode global \
+     --restart-delay 86400s \
+     --restart-max-attempts 3650 \
+     softonic/docker-system-prune \
+     --volumes --all
+ ```
 
 !!! info
          You need to mount the docker socket to allow the command to be executed in the host.
